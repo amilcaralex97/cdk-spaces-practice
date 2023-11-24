@@ -1,4 +1,12 @@
 GET https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces
 ###
 POST https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces
+Content-Type: application/json
+
+{
+    "location": "Paris"
+}
+###
+
+GET https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces?id=1234
 ###
