@@ -4,52 +4,55 @@ import {
 	ScanCommand,
 } from '@aws-sdk/client-dynamodb';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
+import {
+	HTTP_BAD_REQUEST,
+	HTTP_CREATED,
+	HTTP_NOT_FOUND,
+	HTTP_OK,
+} from '../constants';
 
 export async function getSpaces(
 	event: APIGatewayProxyEvent,
 	ddbClient: DynamoDBClient
 ): Promise<APIGatewayProxyResult> {
-	if (event.queryStringParameters) {
-		if ('id' in event.queryStringParameters) {
-			const spaceId = event.queryStringParameters['id'];
+	const { queryStringParameters } = event;
+	const tableName = process.env.TABLE_NAME;
+
+	try {
+		if (queryStringParameters && 'id' in queryStringParameters) {
+			const { id: spaceId } = queryStringParameters;
 			const getItemResponse = await ddbClient.send(
 				new GetItemCommand({
-					TableName: process.env.TABLE_NAME,
-					Key: {
-						id: {
-							S: spaceId,
-						},
-					},
+					TableName: tableName,
+					Key: { id: { S: spaceId } },
 				})
 			);
+
 			if (getItemResponse.Item) {
 				return {
-					statusCode: 200,
+					statusCode: HTTP_OK,
 					body: JSON.stringify(getItemResponse.Item),
 				};
+			} else {
+				return {
+					statusCode: HTTP_NOT_FOUND,
+					body: JSON.stringify(`Space with id ${spaceId} not found!`),
+				};
 			}
-			return {
-				statusCode: 404,
-				body: JSON.stringify(`Space with id ${spaceId} not found!`),
-			};
-		} else {
-			return {
-				statusCode: 401,
-				body: JSON.stringify('Id required'),
-			};
 		}
+
+		const scanResult = await ddbClient.send(
+			new ScanCommand({ TableName: tableName })
+		);
+		return {
+			statusCode: HTTP_CREATED,
+			body: JSON.stringify(scanResult.Items),
+		};
+	} catch (error) {
+		console.error('Error processing request:', error);
+		return {
+			statusCode: HTTP_BAD_REQUEST,
+			body: JSON.stringify('An error occurred processing your request'),
+		};
 	}
-
-	const result = await ddbClient.send(
-		new ScanCommand({
-			TableName: process.env.TABLE_NAME,
-		})
-	);
-
-	console.log(result.Items);
-
-	return {
-		statusCode: 201,
-		body: JSON.stringify(result.Items),
-	};
 }
