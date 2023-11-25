@@ -3,6 +3,7 @@ import {
 	GetItemCommand,
 	ScanCommand,
 } from '@aws-sdk/client-dynamodb';
+import { unmarshall } from '@aws-sdk/util-dynamodb';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 import {
 	HTTP_BAD_REQUEST,
@@ -29,9 +30,10 @@ export async function getSpaces(
 			);
 
 			if (getItemResponse.Item) {
+				const unmarshalledItem = unmarshall(getItemResponse.Item);
 				return {
 					statusCode: HTTP_OK,
-					body: JSON.stringify(getItemResponse.Item),
+					body: JSON.stringify(unmarshalledItem),
 				};
 			} else {
 				return {
@@ -44,9 +46,12 @@ export async function getSpaces(
 		const scanResult = await ddbClient.send(
 			new ScanCommand({ TableName: tableName })
 		);
+		const unmarshalledItems = scanResult.Items.map((item) =>
+			unmarshall(item)
+		);
 		return {
 			statusCode: HTTP_CREATED,
-			body: JSON.stringify(scanResult.Items),
+			body: JSON.stringify(unmarshalledItems),
 		};
 	} catch (error) {
 		console.error('Error processing request:', error);
