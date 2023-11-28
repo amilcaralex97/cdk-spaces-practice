@@ -9,6 +9,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { getSpaces } from "./GetSpaces";
 import { updateSpace } from "./UpdateSpace";
 import { deleteSpaces } from "./DeleteSpace";
+import { MissingFieldError } from "../shared/Validator";
 
 const ddbClient = new DynamoDBClient({});
 
@@ -37,10 +38,15 @@ async function handler(
         break;
     }
   } catch (error) {
-    console.log(error);
+    if (error instanceof MissingFieldError) {
+      return {
+        statusCode: 400,
+        body: error.message,
+      };
+    }
     return {
       statusCode: 500,
-      body: JSON.stringify(error.message),
+      body: error.message,
     };
   }
 
