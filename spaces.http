@@ -4,17 +4,21 @@ POST https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces
 Content-Type: application/json
 
 {
-    "location": "Paris"
+    "location": "Guadalajara",
+    "name": "Best Location"
 }
 ###
 
-GET https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces?id=1234
+GET https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces?id=1583c549-cde8-422e-b992-1438c217f248
 ###
 
-PUT https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces?id=1234
+PUT https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces?id=1583c549-cde8-422e-b992-1438c217f248
 Content-Type: application/json
 
 {
-    "location": "Paris2"
+    "name": "La France"
 }
+###
+
+DELETE https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces?id=1583c549-cde8-422e-b992-1438c217f248
 ###
