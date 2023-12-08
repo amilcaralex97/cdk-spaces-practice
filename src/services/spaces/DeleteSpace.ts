@@ -12,11 +12,18 @@ import {
   HTTP_NOT_FOUND,
   HTTP_OK,
 } from "../constants";
+import { hasAdminGroup } from "../shared/Utils";
 
 export async function deleteSpaces(
   event: APIGatewayProxyEvent,
   ddbClient: DynamoDBClient
 ): Promise<APIGatewayProxyResult> {
+  if (!hasAdminGroup(event)) {
+    return {
+      statusCode: 401,
+      body: JSON.stringify(`Not authorized!`),
+    };
+  }
   const { queryStringParameters } = event;
   const tableName = process.env.TABLE_NAME;
 
