@@ -1,24 +1,31 @@
-GET https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces
-###
-POST https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces
-Content-Type: application/json
+@url = https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/
+@token = eyJraWQiOiJ6RHBaOFFRejBPTXc1a1pnOGlNWTJ1MkxjdXBjWnFyZks3SVB0VEluSFlVPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI3OWY1OGFiNi01YTk5LTQxYWEtYTU4MS02ZDdiMjM4OGI2OWMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9tT0ZFMm5JY1IiLCJjb2duaXRvOnVzZXJuYW1lIjoiYW1pbGNhcmFsZXg5NyIsIm9yaWdpbl9qdGkiOiIwYzdhNTNlZi1mYWEyLTQ1ZjQtYjMyYy03NGZlOTlkZTcyMjQiLCJhdWQiOiI0YWVrMjluMWd1YjAwdDN2aDFuOTA3ZWVqcCIsImV2ZW50X2lkIjoiMTE1ZmNjNTEtYTQ4OS00MzNhLTlmZDctYzRhZWI5OTRhZTI1IiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE3MDE5OTk5NjUsImV4cCI6MTcwMjAwMzU2NSwiaWF0IjoxNzAxOTk5OTY1LCJqdGkiOiJkZmUxYTE2Ny02YTY3LTRjMmYtYjI4YS0yZTc0YjJhNjhjZGUiLCJlbWFpbCI6ImFtaWxjYXJhbGV4OTdAZ21haWwuY29tIn0.Jp1fpZAqNkKIBfbDsUjye3TXjkDpA_Qy-yLW_y3czO8fqlGqAs6U-Xr_T8NIv-_7-4Mpayz7o0XS-is9gugf1-QmittZlUZ4EBIJVB8rPcxkKzetk_zFnkl4MNGlcoPtW3vBYp_zfWYkFWhWaLZ4eSC0UlkTb0gAlVQKlrMxyjQtsPVn46CVlpBWr-Gm9HmHJiw0h75pdEk2mCHsfJLWriKx8nx4XznUrhbM1VlD-xaPsm7hLMw2ezzOEdmJX-MHeIFoRyvHLXpJo_jgM5RE5VNd0GHjN7SJ7FyWbOEAaHA5vwh7epfEHAED5qKKoVqV3kYDuGvQnljrdi6qmDid1w
 
+GET {{url}}/spaces
+Authorization: {{token}}
+###
+POST {{url}}/spaces
+Content-Type: application/json
+Authorization: {{token}}
 {
     "location": "Guadalajara",
     "name": "Best Location"
 }
 ###
 
-GET https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces?id=1583c549-cde8-422e-b992-1438c217f248
+GET {{url}}/spaces?id=1583c549-cde8-422e-b992-1438c217f248
+Authorization: {{token}}
 ###
 
-PUT https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces?id=1583c549-cde8-422e-b992-1438c217f248
+PUT {{url}}/spaces?id=1583c549-cde8-422e-b992-1438c217f248
 Content-Type: application/json
+Authorization: {{token}}
 
 {
     "name": "La France"
 }
 ###
 
-DELETE https://ym9a3ak32a.execute-api.us-east-1.amazonaws.com/prod/spaces?id=1583c549-cde8-422e-b992-1438c217f248
+DELETE {{url}}/spaces?id=1583c549-cde8-422e-b992-1438c217f248
+Authorization: {{token}}
 ###

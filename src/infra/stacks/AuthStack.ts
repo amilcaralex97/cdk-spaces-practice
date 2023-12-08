@@ -39,4 +39,8 @@ export class AuthStack extends Stack {
       value: this.userPoolClient.userPoolClientId,
     });
   }
+
+  getUserPool(): UserPool {
+    return this.userPool;
+  }
 }
